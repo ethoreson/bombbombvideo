@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
 
 module.exports = {
 
@@ -18,7 +19,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [ '.js', '.jsx' ]
+    extensions: [ '.js', '.jsx', '.web.js', '.webpack.js' ]
   },
 
   devtool: '#source-map',
@@ -46,6 +47,15 @@ module.exports = {
         }
       },
     ],
+    loaders: [
+      {test: /\.json$/, loader: 'json-loader'}
+    ],
+  },
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
   },
 
   plugins: [
