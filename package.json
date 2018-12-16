@@ -6,6 +6,9 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-youtube": "^7.8.0",
+    "video.js": "^7.3.0",
+    "videojs-youtube": "^2.6.0",
     "youtube-player": "^5.5.1",
     "youtube-random-video": "^1.0.5"
   },
