@@ -1,0 +1,33 @@
+{
+  "name": "bombbomb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "html-webpack-plugin": "^2.29.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "webpack-dev-server": "^2.5.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethoreson/bombbombvideo.git"
+  },
+  "author": "Emilie Thoreson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethoreson/bombbombvideo/issues"
+  },
+  "homepage": "https://github.com/ethoreson/bombbombvideo#readme"
+}
