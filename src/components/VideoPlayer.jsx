@@ -13,6 +13,9 @@ export default class VideoPlayer extends React.Component {
     this.pauseClicked = this.pauseClicked.bind(this)
     this.videoFinished = this.videoFinished.bind(this)
     this.stateChanged = this.stateChanged.bind(this)
+    this.playbackQualityChanged = this.playbackQualityChanged.bind(this)
+    this.rateChanged = this.rateChanged.bind(this)
+    this.settingsChanged = this.settingsChanged.bind(this)
     this.state = {sourceFeed: []}
   }
 
@@ -27,9 +30,20 @@ export default class VideoPlayer extends React.Component {
   }
 
   playClicked(event) {
+    console.log('PLAY EVENT:', event);
+
     var currentVidTime = Math.round(event.target.getCurrentTime());
     var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
     var statusFeed = this.state.sourceFeed;
+    if (event.target.getCurrentTime() < this.state.lastRecordedTime) {
+      var rewoundInSecs = 'Rewound ' + Math.round(this.state.lastRecordedTime - event.target.getCurrentTime()) + '  seconds';
+      statusFeed.push({time: formattedVidTime, message: rewoundInSecs})
+      this.setState({sourceFeed: statusFeed, lastRecordedTime: event.target.getCurrentTime()})
+      return;
+    }
+    if (statusFeed.length && statusFeed[statusFeed.length - 1].message.includes('Rewound')) {
+      return;
+    }
     if (this.state.pausedAt) {
       var pauseDuration = TimeHelper.getPauseDuration(this.state.pausedAt);
       var resumedMessage = 'Unpaused after ' + pauseDuration;
@@ -44,10 +58,16 @@ export default class VideoPlayer extends React.Component {
     var currentVidTime = Math.round(event.target.getCurrentTime());
     var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
     var statusFeed = this.state.sourceFeed;
+    if (this.state.lastRecordedTime && this.state.lastRecordedTime > currentVidTime) { //currently doesnt work when you pause vid then rewind
+      var rewoundInSecs = 'Rewound ' + Math.round(this.state.lastRecordedTime - currentVidTime) + '  seconds';
+      statusFeed.push({time: formattedVidTime, message: rewoundInSecs})
+      this.setState({sourceFeed: statusFeed, lastRecordedTime: event.target.getCurrentTime()})
+      return;
+    }
     statusFeed.push({time: formattedVidTime, message: 'Pause Pressed'})
     var d = new Date();
     var t = d.getTime();
-    this.setState({sourceFeed: statusFeed, pausedAt: t})
+    this.setState({sourceFeed: statusFeed, pausedAt: t, lastRecordedTime: event.target.getCurrentTime()})
 
   }
 
@@ -69,6 +89,31 @@ export default class VideoPlayer extends React.Component {
 
   videoFinished() {
 
+  }
+
+  playbackQualityChanged(event) {
+    this.settingsChanged('quality', event);
+  }
+
+  rateChanged(event) {
+    this.settingsChanged('rate', event);
+  }
+
+  settingsChanged(command, event) {
+    var currentVidTime = Math.round(event.target.getCurrentTime());
+    var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
+    if (formattedVidTime == '0:00' && command == 'quality') {
+      return;
+    }
+    var statusFeed = this.state.sourceFeed;
+    let playbackMessage;
+    if (command == "quality") {
+      playbackMessage = 'Video Quality now at ' + event.target.getPlaybackQuality();
+    } else if (command == "rate") {
+      playbackMessage = 'Playback Rate now at ' + event.target.getPlaybackRate();
+    }
+    statusFeed.push({time: formattedVidTime, message: playbackMessage})
+    this.setState({sourceFeed: statusFeed});
   }
 
   render() {
@@ -101,6 +146,8 @@ export default class VideoPlayer extends React.Component {
             onPause={this.pauseClicked}
             onEnd={this.videoFinished}
             onStateChange={this.stateChanged}
+            onPlaybackQualityChange={this.playbackQualityChanged}
+            onPlaybackRateChange={this.rateChanged}
           />
         </div>
         <div className="statusFeed">

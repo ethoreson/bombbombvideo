@@ -30,6 +30,7 @@ const TimeHelper = {
     } else if (t < 3600) { //less than an hour
       var mins = Math.floor(t / 60);
       var secs = Math.round(t - mins * 60)
+      if (secs < 10) { secs = "0" + secs}
       formattedVidTime = mins + ":" + secs
     } else { //over an hour
       var hours = Math.floor(t / 3600);
