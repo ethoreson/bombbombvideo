@@ -1,0 +1,15 @@
+button {
+  height: 50px;
+  width: 150px;
+  background: none;
+  border-radius: 3px;
+}
+
+button:hover {
+  border-color: #080808;
+  cursor: pointer;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}

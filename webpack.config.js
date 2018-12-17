@@ -19,7 +19,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [ '.js', '.jsx', '.web.js', '.webpack.js' ]
+    extensions: [ '.js', '.jsx', '.web.js', '.webpack.js', '.css' ]
   },
 
   devtool: '#source-map',
@@ -46,6 +46,14 @@ module.exports = {
           ]
         }
       },
+      {
+        test: /\.css$/,
+        loader: 'style-loader'
+      },
+      {
+        test: /\.css$/,
+        loader: 'css-loader'
+      }
     ],
     loaders: [
       {test: /\.json$/, loader: 'json-loader'}

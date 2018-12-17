@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import YouTube from 'react-youtube';
+import Moment from 'react-moment';
+import TimeHelper from '../helpers/TimeHelper';
+import '../styles/player.css';
 
 export default class VideoPlayer extends React.Component {
   constructor(props) {
@@ -23,38 +26,24 @@ export default class VideoPlayer extends React.Component {
   }
 
   playClicked(event) {
-    var currentTime = Math.round(event.target.getCurrentTime() * 100) / 100;
+    var currentVidTime = Math.round(event.target.getCurrentTime());
+    var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
     var statusFeed = this.state.sourceFeed;
     if (this.state.pausedAt) {
-      var d = new Date();
-      var t = d.getTime();
-      let timeUnit;
-      var timePaused = (t - this.state.pausedAt) / 1000
-      if (timePaused < 60) {
-        timePaused = Math.round(timePaused * 100) / 100;
-        timeUnit = " seconds"
-      } else if (timePaused > 3600) {
-        var hours = Math.floor(timePaused / 3600);
-        //var mins = Math.floor(timePaused - hours )
-        timeUnit = " hours"
-      } else {
-        var mins = Math.floor(timePaused / 60);
-        var secs = Math.round(timePaused - mins * 60);
-        timePaused = mins + ':' + secs;
-        timeUnit = " minutes"
-      }
-      var resumedMessage = 'unpaused after ' + timePaused + timeUnit;
-      statusFeed.push({time: currentTime, message: resumedMessage})
+      var pauseDuration = TimeHelper.getPauseDuration(this.state.pausedAt);
+      var resumedMessage = 'Unpaused after ' + pauseDuration;
+      statusFeed.push({time: formattedVidTime, message: resumedMessage})
     } else {
-      statusFeed.push({time: currentTime, message: 'played'})
+      statusFeed.push({time: formattedVidTime, message: 'Play Pressed'})
     }
     this.setState({sourceFeed: statusFeed})
   }
 
   pauseClicked(event) {
-    var currentTime = Math.round(event.target.getCurrentTime() * 100) / 100;
+    var currentVidTime = Math.round(event.target.getCurrentTime());
+    var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
     var statusFeed = this.state.sourceFeed;
-    statusFeed.push({time: currentTime, message: 'paused'})
+    statusFeed.push({time: formattedVidTime, message: 'Pause Pressed'})
     var d = new Date();
     var t = d.getTime();
     this.setState({sourceFeed: statusFeed, pausedAt: t})
@@ -94,24 +83,28 @@ export default class VideoPlayer extends React.Component {
     };
 
     var statusFeed = this.state.sourceFeed.map(function(update, index) {
-      return <div key={index}>{update.time} - {update.message}</div>
+      return <div key={index} className="feedLine"><div className="timeDiv">{update.time}</div> <div className="messageDiv">{update.message}</div></div>
     });
 
     return (
       <div className="videoPlayerView">
-        <div className="videoStatus">{currentVideoStatus}</div>
-        <YouTube
-          videoId={src}
-          opts={opts}
-          className="videoPlayer"
-          onPlay={this.playClicked}
-          onPause={this.pauseClicked}
-          onEnd={this.videoFinished}
-          onStateChange={this.stateChanged}
-
-        />
+        <div className="videoContent">
+          <div className="youtube">
+            <div className="videoStatus">{currentVideoStatus}</div>
+            <YouTube
+            videoId={src}
+            opts={opts}
+            className="videoPlayer"
+            onPlay={this.playClicked}
+            onPause={this.pauseClicked}
+            onEnd={this.videoFinished}
+            onStateChange={this.stateChanged}
+          />
+        </div>
         <div className="statusFeed">
+          <h4 className="feedTitle">ACTIVITY FEED</h4>
           {statusFeed}
+        </div>
         </div>
       </div>
     );
