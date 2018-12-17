@@ -1,15 +1,27 @@
 button {
-  height: 50px;
-  width: 150px;
+  height: 100px;
+  width: 310px;
   background: none;
-  border-radius: 3px;
+  border-radius: 10px;
+  font-size: 34px;
+  color: #fff;
+  background-color: #4056A1;
+  border-color: #C5CBE3;
 }
 
 button:hover {
-  border-color: #080808;
+  border-color: #4056A1;
+  background-color: #F13C20;
   cursor: pointer;
 }
 
 body {
   font-family: 'Lato', sans-serif;
+}
+
+.headerView {
+  display: flex;
+  justify-content: space-between;
+  padding: auto 40px;
+  margin: 20px 110px 10px 110px;
 }

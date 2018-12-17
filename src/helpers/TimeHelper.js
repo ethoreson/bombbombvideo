@@ -18,7 +18,6 @@ const TimeHelper = {
       var secs = Math.round(timePaused - mins * 60);
       timePaused = mins + ':' + secs + ' minutes';
     }
-    console.log('TIME UNIT RETURNING:', timePaused);
     return timePaused;
   },
 

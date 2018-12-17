@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import YouTube from 'react-youtube';
 import Moment from 'react-moment';
 import TimeHelper from '../helpers/TimeHelper';
+import StaticYoutube from './StaticYoutube';
 import '../styles/player.css';
 
 export default class VideoPlayer extends React.Component {
@@ -20,7 +21,7 @@ export default class VideoPlayer extends React.Component {
     var youtube = require('youtube-random-video');
     youtube.getRandomVid('AIzaSyALQDoCiusD0Poqe2mDgGo78zoQy31U2N0', function(err, data) {
       var videoId = data.id.videoId;
-      self.setState({videoSource: videoId});
+      self.setState({videoSource: videoId, youtubeData: data});
       return;
     })
   }
@@ -72,7 +73,6 @@ export default class VideoPlayer extends React.Component {
 
   render() {
     var src = this.state.videoSource ? this.state.videoSource : "";
-    var currentVideoStatus = this.state.videoStatus ? "Video Status: " + this.state.videoStatus : null;
 
     var opts = {
       height: '390',
@@ -82,6 +82,9 @@ export default class VideoPlayer extends React.Component {
       }
     };
 
+    var staticYoutube = this.state.youtubeData ? <div><StaticYoutube data={this.state.youtubeData} status={this.state.videoStatus} /></div> : null;
+
+
     var statusFeed = this.state.sourceFeed.map(function(update, index) {
       return <div key={index} className="feedLine"><div className="timeDiv">{update.time}</div> <div className="messageDiv">{update.message}</div></div>
     });
@@ -90,7 +93,6 @@ export default class VideoPlayer extends React.Component {
       <div className="videoPlayerView">
         <div className="videoContent">
           <div className="youtube">
-            <div className="videoStatus">{currentVideoStatus}</div>
             <YouTube
             videoId={src}
             opts={opts}
@@ -105,6 +107,9 @@ export default class VideoPlayer extends React.Component {
           <h4 className="feedTitle">ACTIVITY FEED</h4>
           {statusFeed}
         </div>
+        </div>
+        <div className="dataBoxParent">
+          {staticYoutube}
         </div>
       </div>
     );

@@ -18,10 +18,14 @@ export default class App extends React.Component {
 
     return (
       <div className="app">
+        <div className="headerView">
+          <div className='titles'>
         <h1>BombBomb Random Video</h1>
         <h4>A technical takehome for Emilie</h4>
+        </div>
+        <div><button className="reloadButton" onClick={this.onRefresh}>Do It Again</button></div>
+        </div>
         <VideoPlayer />
-        <button className="reloadButton" onClick={this.onRefresh}>Do It Again</button>
       </div>
     );
   }
