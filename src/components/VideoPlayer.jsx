@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import YouTube from 'react-youtube';
-import Moment from 'react-moment';
 import TimeHelper from '../helpers/TimeHelper';
 import StaticYoutube from './StaticYoutube';
 import '../styles/player.css';
@@ -30,8 +29,6 @@ export default class VideoPlayer extends React.Component {
   }
 
   playClicked(event) {
-    console.log('PLAY EVENT:', event);
-
     var currentVidTime = Math.round(event.target.getCurrentTime());
     var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
     var statusFeed = this.state.sourceFeed;
@@ -73,10 +70,11 @@ export default class VideoPlayer extends React.Component {
 
   stateChanged(event) {
     var videoStatus = "";
+    var borderColor = "";
     if (event.data == 0) {
       videoStatus += "Completed"
     } else if (event.data == 1) {
-        videoStatus += "Playing"
+      videoStatus += "Playing"
     } else if (event.data == 2) {
       videoStatus += "Paused"
     } else if (event.data == 3) {
@@ -120,8 +118,8 @@ export default class VideoPlayer extends React.Component {
     var src = this.state.videoSource ? this.state.videoSource : "";
 
     var opts = {
-      height: '390',
-      width: '640',
+      height: '468',
+      width: '768',
       plyaerVars: {
         autoplay: 0
       }
@@ -138,7 +136,7 @@ export default class VideoPlayer extends React.Component {
       <div className="videoPlayerView">
         <div className="videoContent">
           <div className="youtube">
-            <YouTube
+          <YouTube
             videoId={src}
             opts={opts}
             className="videoPlayer"

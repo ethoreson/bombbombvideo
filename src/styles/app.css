@@ -1,17 +1,22 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+}
+
 button {
   height: 100px;
-  width: 310px;
+  width: 300px;
   background: none;
-  border-radius: 10px;
+  border-radius: 6px;
   font-size: 34px;
-  color: #fff;
-  background-color: #4056A1;
-  border-color: #C5CBE3;
+  color: #000;
+  background-color: #8D230F;
 }
 
 button:hover {
-  border-color: #4056A1;
-  background-color: #F13C20;
+  /*background-color: #565656;*/
+  color: #D7CEC7;
   cursor: pointer;
 }
 
@@ -22,6 +27,14 @@ body {
 .headerView {
   display: flex;
   justify-content: space-between;
-  padding: auto 40px;
-  margin: 20px 110px 10px 110px;
+  margin: 10px 0px;
+  align-items: flex-start;
+}
+
+h1 {
+  font-size: 34px;
+}
+
+h4 {
+  font-size: 16px;
 }

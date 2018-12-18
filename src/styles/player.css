@@ -1,14 +1,15 @@
+
 .videoContent {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 .statusFeed {
-  background-color: #C5CBE3;
-  border: 1px solid #4056A1;
-  border-radius: 3px;
+  background-color: #1E434C;
+  border-radius: 6px;
   width: 300px;
-  height: 390px;
+  height: 468px;
   overflow-y: scroll;
   padding-bottom: 10px;
 }
@@ -24,8 +25,14 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-content: space-around;
+  margin-bottom: 6px;
+  color: #fff;
 }
 
 .timeDiv {
   margin-right: 60px;
+}
+
+.feedTitle {
+  text-align: center;
 }

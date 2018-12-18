@@ -1,7 +1,41 @@
-.dataView {
-  background-color: #C5CBE3;
-  border: 1px solid #4056A1;
-  border-radius: 3px;
-  width: 500px;
-  margin-left: 110px;
+.videoFacts {
+	background-color: #9B4F0F;
+    border-radius: 3px;
+    width: 750px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 5px solid #9B4F0F;
+}
+
+.statsCols {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.colName {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+#Playing {
+	border-color: #649255;
+}
+
+#Paused {
+	border-color: #F5B923;
+}
+
+#Buffering {
+	border-color: #BB171F;
+}
+
+#Loaded {
+	border-color: #007E76;
+}
+
+#Completed {
+	border-color: #8408D6
+;
 }

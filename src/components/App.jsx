@@ -20,12 +20,16 @@ export default class App extends React.Component {
       <div className="app">
         <div className="headerView">
           <div className='titles'>
-        <h1>BombBomb Random Video</h1>
-        <h4>A technical takehome for Emilie</h4>
+            <h1>BombBomb Random Video</h1>
+            <h4>A technical takehome for Emilie</h4>
+          </div>
+          <div className="reloadButton">
+            <button className="reloadButton" onClick={this.onRefresh}>Do It Again</button>
+          </div>
         </div>
-        <div><button className="reloadButton" onClick={this.onRefresh}>Do It Again</button></div>
-        </div>
+        <div>
         <VideoPlayer />
+        </div>
       </div>
     );
   }
