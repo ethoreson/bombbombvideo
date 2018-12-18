@@ -7,12 +7,9 @@ export default class StaticYoutube extends React.Component {
     super(props)
   }
 
-
   render() {
 
   var borderFormat = this.props.status;
-
-
 
     return (
       <div className="videoFacts" id={borderFormat}>

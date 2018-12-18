@@ -10,7 +10,6 @@ export default class VideoPlayer extends React.Component {
     super(props)
     this.playClicked = this.playClicked.bind(this)
     this.pauseClicked = this.pauseClicked.bind(this)
-    this.videoFinished = this.videoFinished.bind(this)
     this.stateChanged = this.stateChanged.bind(this)
     this.playbackQualityChanged = this.playbackQualityChanged.bind(this)
     this.rateChanged = this.rateChanged.bind(this)
@@ -55,7 +54,7 @@ export default class VideoPlayer extends React.Component {
     var currentVidTime = Math.round(event.target.getCurrentTime());
     var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
     var statusFeed = this.state.sourceFeed;
-    if (this.state.lastRecordedTime && this.state.lastRecordedTime > currentVidTime) { //currently doesnt work when you pause vid then rewind
+    if (this.state.lastRecordedTime && this.state.lastRecordedTime > currentVidTime) {
       var rewoundInSecs = 'Rewound ' + Math.round(this.state.lastRecordedTime - currentVidTime) + '  seconds';
       statusFeed.push({time: formattedVidTime, message: rewoundInSecs})
       this.setState({sourceFeed: statusFeed, lastRecordedTime: event.target.getCurrentTime()})
@@ -70,9 +69,13 @@ export default class VideoPlayer extends React.Component {
 
   stateChanged(event) {
     var videoStatus = "";
-    var borderColor = "";
     if (event.data == 0) {
       videoStatus += "Completed"
+      var currentVidTime = Math.round(event.target.getCurrentTime());
+      var formattedVidTime = TimeHelper.getVideoTime(currentVidTime);
+      var statusFeed = this.state.sourceFeed;
+      statusFeed.push({time: formattedVidTime, message: 'Video Finished'})
+      this.setState({sourceFeed: statusFeed})
     } else if (event.data == 1) {
       videoStatus += "Playing"
     } else if (event.data == 2) {
@@ -85,9 +88,6 @@ export default class VideoPlayer extends React.Component {
     this.setState({videoStatus: videoStatus})
   }
 
-  videoFinished() {
-
-  }
 
   playbackQualityChanged(event) {
     this.settingsChanged('quality', event);
@@ -136,26 +136,23 @@ export default class VideoPlayer extends React.Component {
       <div className="videoPlayerView">
         <div className="videoContent">
           <div className="youtube">
-          <YouTube
-            videoId={src}
-            opts={opts}
-            className="videoPlayer"
-            onPlay={this.playClicked}
-            onPause={this.pauseClicked}
-            onEnd={this.videoFinished}
-            onStateChange={this.stateChanged}
-            onPlaybackQualityChange={this.playbackQualityChanged}
-            onPlaybackRateChange={this.rateChanged}
-          />
+            <YouTube
+              videoId={src}
+              opts={opts}
+              className="videoPlayer"
+              onPlay={this.playClicked}
+              onPause={this.pauseClicked}
+              onStateChange={this.stateChanged}
+              onPlaybackQualityChange={this.playbackQualityChanged}
+              onPlaybackRateChange={this.rateChanged}
+            />
+          </div>
+          <div className="statusFeed">
+            <h4 className="feedTitle">ACTIVITY FEED</h4>
+            {statusFeed}
+          </div>
         </div>
-        <div className="statusFeed">
-          <h4 className="feedTitle">ACTIVITY FEED</h4>
-          {statusFeed}
-        </div>
-        </div>
-        <div className="dataBoxParent">
           {staticYoutube}
-        </div>
       </div>
     );
   }
