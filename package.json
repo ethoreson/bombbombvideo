@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
     "moment": "^2.23.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -36,6 +38,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ethoreson/bombbombvideo.git"
+  },
+  "engines": {
+    "node": "10.4.0"
   },
   "author": "Emilie Thoreson",
   "license": "ISC",
