@@ -12,8 +12,7 @@
     "video.js": "^7.3.0",
     "videojs-youtube": "^2.6.0",
     "youtube-player": "^5.5.1",
-    "youtube-random-video": "^1.0.5",
-    "webpack-dev-server": "^2.5.0"
+    "youtube-random-video": "^1.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
